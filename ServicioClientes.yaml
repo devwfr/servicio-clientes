@@ -1,0 +1,489 @@
+swagger: '2.0'
+info:
+  description: Servicio para la gestión de clientes en  OMS Kallsonys
+  version: 1.0.0
+  title: Servicio Clientes Kallsonys
+ 
+basePath: /OMS/Clientes/v1
+tags:
+  - name: Cliente
+    description: Gestión de Clientes
+schemes:
+  - http
+paths:
+  '/clientes':
+    get:
+      tags:
+        - Cliente
+      summary: Consultar Todos los clientes
+      description: Retorna todos los clientes
+      operationId: consultarClientes
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/ClientesRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ClientesRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ClientesRsType'
+  '/cliente':        
+    post:
+      tags:
+        - Cliente
+      summary: Registrar un Cliente
+      operationId: registrarCliente
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: body
+          name: Cliente
+          description: Cliente a registrar
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/PostRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/PostRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/PostRsType'
+    put:
+      tags:
+        - Cliente 
+      summary: Actualizar Cliente
+      description: Actualizar un cliente 
+      operationId: actualizarClientePorId
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: body
+          name: Cliente
+          description: Cliente a registrar
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/StatusType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/StatusType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/StatusType'        
+  '/cliente/{idCliente}':
+    get:
+      tags:
+        - Cliente
+      summary: Consultar Cliente por ID
+      description: Retorna un Cliente
+      operationId: consultarClientePorId
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: idCliente
+          description: Id del cliente a consultar
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/ClienteRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ClienteRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ClienteRsType' 
+  '/cliente/usuario/{usuario}':
+    get:
+      tags:
+        - Cliente
+      summary: Consultar Cliente por usuario
+      description: Retorna un cliente
+      operationId: consultarClientePorUsuario
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: usuario
+          description: usuario del cliente a consultar
+          required: true
+          type: string
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/ClienteRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ClienteRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ClienteRsType'        
+    
+  '/cliente/{idCliente}/categoria/{idcategoria}':  
+    put:
+      tags:
+        - Cliente 
+      summary: Actualizar categoria del cliente
+      description: Actualizar categoria del cliente
+      operationId: actualizarCategoriaCliente
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: idCliente
+          description: idCliente
+          required: true
+          type: integer  
+        - in: path
+          name: idcategoria
+          description: categoria del cliente
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/StatusType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/StatusType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/StatusType'        
+  '/cliente/{usuario}/recuperar-credenciales':
+    post:
+      tags:
+        - Cliente
+      summary: Recuperar credenciales cliente
+      description: Recuperar credenciales cliente
+      operationId: recuperarCredencialesCliente
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: usuario
+          description: usuario a recuperar credenciales
+          required: true
+          type: string
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/StatusType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/StatusType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/StatusType' 
+  '/cliente/{usuario}/direcciones':
+    get:
+      tags:
+        - Cliente
+      summary: Consultar Todos las direcciones asociadas a un cliente
+      description: Retorna Todos las direcciones asociadas a un cliente
+      operationId: direccionesCliente
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: usuario
+          description: usuario a consultar
+          required: true
+          type: string  
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/DireccionesRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/DireccionesRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/DireccionesRsType'
+  '/cliente/direccion':
+    post:
+      tags:
+        - Cliente
+      summary: Registrar Direccion 
+      description: Registrar Direccion 
+      operationId: registrarDireccion
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: body
+          name: direccion
+          description: direccion a registrar direccion
+          required: true
+          schema:
+            $ref: '#/definitions/Direccion' 
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/PostRsType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/PostRsType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/PostRsType'
+  '/cliente/{idUsuario}/direccion/{idDireccion}':        
+    put:
+      tags:
+        - Cliente
+      summary: Actualizar Direccion 
+      description: Actualizar Direccion 
+      operationId: ActualizarDireccion
+      produces:
+        - application/json
+      parameters:
+        - name: headerRq
+          in: header
+          description: >-
+            Cabecera estándar
+          required: true
+          type: string
+        - name: serviceID
+          in: header
+          description: 'servKallcli'
+          required: true
+          type: string
+        - in: path
+          name: idUsuario
+          description: id usuario actualizar direccion
+          required: true
+          type: integer
+        - in: path
+          name: idDireccion
+          description:  idUsuario direccion
+          required: true
+          type: integer  
+        - in: body
+          name: direccion
+          description: direccion actualizar 
+          required: true
+          schema:
+            $ref: '#/definitions/Direccion' 
+      responses:
+        '200':
+          description: EXITO
+          schema:
+            $ref: '#/definitions/StatusType'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/StatusType'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/StatusType'           
+definitions:
+  StatusType:
+    type: object
+    properties:
+      statusCode:
+        type: integer
+        description: Código de status.
+      statusDesc:
+        type: string
+        description: Descripción de estatus.
+    description: Status de respuesta.
+    xml:
+      name: StatusType
+  Clientes:
+    type: array
+    items:
+      $ref: '#/definitions/Cliente'
+  PostRsType:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/StatusType'
+      idClienteCreado:
+        type: integer
+        description: idCreado. 
+  ClienteRsType:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/StatusType'
+      cliente:
+        $ref: '#/definitions/Cliente'
+  ClientesRsType:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/StatusType'
+      clientes:
+        $ref: '#/definitions/Clientes'      
+    description: clientes.
+  Cliente:
+    $ref: 'https://gist.githubusercontent.com/devwfr/c15a8216a51535425ff18cb7e97aa17d/raw/f2a2753b731a0d6b19670c4b28e4a7f9a4228fda/Cliente.schema'
+  Direccion:
+    type: object
+    properties:
+      idDireccion:
+        type: integer
+      idCliente:
+        type: integer
+      direccion:
+        type: string
+      pais:
+        type: string
+      ciudad:
+        type: string
+      tipodireccion:
+        type: string
+      estado:
+        type: string
+  DireccionesRsType:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/StatusType'
+      direcciones:
+        $ref: '#/definitions/Direcciones'      
+    description: clientes.      
+  Direcciones:
+    type: array
+    items:
+      $ref: '#/definitions/Direccion'
